@@ -1,0 +1,42 @@
+import random
+import time
+
+class VacuumCleaner:
+    def __init__(self):
+        # Quadrants in clockwise order
+        self.quadrants = ["Q1", "Q2", "Q3", "Q4"]
+        # Randomly assign clean/dirty status
+        self.status = {q: random.choice(["clean", "dirty"]) for q in self.quadrants}
+        self.current_index = 0
+   
+    def clean(self, quadrant):
+        print(f"Vacuum is cleaning {quadrant}...")
+        time.sleep(1)  # simulate cleaning time
+        self.status[quadrant] = "clean"
+        print(f"{quadrant} is now clean.")
+   
+    def move_next(self):
+        self.current_index = (self.current_index + 1) % len(self.quadrants)
+        next_quadrant = self.quadrants[self.current_index]
+        print(f"Vacuum moves to {next_quadrant}")
+   
+    def start(self, cycles=2):
+        print("Starting Vacuum Cleaner...")
+        for _ in range(cycles * len(self.quadrants)):
+            current_quadrant = self.quadrants[self.current_index]
+            print(f"\nChecking {current_quadrant}...")
+           
+            if self.status[current_quadrant] == "dirty":
+                self.clean(current_quadrant)
+            else:
+                print(f"{current_quadrant} is already clean. Skipping.")
+           
+            self.move_next()
+       
+        print("\nFinished cleaning cycles!")
+        print("Final status:", self.status)
+
+# Run simulation
+vacuum = VacuumCleaner()
+vacuum.start(cycles=2)  # Runs 2 full clockwise rotations
+
